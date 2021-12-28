@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react'
+import React, { forwardRef, memo, useState } from 'react'
 import cx from 'classnames'
 import PropTypes from 'prop-types'
 import { useStyleConfig } from '../../hooks'
@@ -16,31 +16,34 @@ const internalStyles = {
   flexShrink: 0
 }
 
-const TableHead = memo(function TableHead(props) {
-  const { accountForScrollbar = true, children, className, ...rest } = props
-  const [scrollbarWidth, setScrollBarWidth] = useState(0)
+const TableHead = memo(
+  forwardRef(function TableHead(props, ref) {
+    const { accountForScrollbar = true, children, className, ...rest } = props
+    const [scrollbarWidth, setScrollBarWidth] = useState(0)
 
-  const { className: themedClassName, height: themeHeight, ...boxProps } = useStyleConfig(
-    'TableHead',
-    emptyObject,
-    pseudoSelectors,
-    internalStyles
-  )
+    const { className: themedClassName, height: themeHeight, ...boxProps } = useStyleConfig(
+      'TableHead',
+      emptyObject,
+      pseudoSelectors,
+      internalStyles
+    )
 
-  const height = rest.height || themeHeight
+    const height = rest.height || themeHeight
 
-  return (
-    <Pane
-      paddingRight={scrollbarWidth}
-      className={cx(themedClassName, className)}
-      height={height}
-      {...boxProps}
-      {...rest}
-    >
-      {children} {accountForScrollbar && <ScrollbarSize handleScrollbarSize={setScrollBarWidth} />}
-    </Pane>
-  )
-})
+    return (
+      <Pane
+        paddingRight={scrollbarWidth}
+        className={cx(themedClassName, className)}
+        height={height}
+        {...boxProps}
+        {...rest}
+        ref={ref}
+      >
+        {children} {accountForScrollbar && <ScrollbarSize handleScrollbarSize={setScrollBarWidth} />}
+      </Pane>
+    )
+  })
+)
 
 TableHead.propTypes = {
   /**

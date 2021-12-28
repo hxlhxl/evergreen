@@ -88,6 +88,11 @@ export {
   Strong
 } from './typography'
 
+/* Start Extended */
+// export { Grid, Col, Row } from './grid'
+export { Grid } from './grid'
+/* End Extended */
+
 /* Start generated icons */
 export * from './icons'
 /* End generated icons */

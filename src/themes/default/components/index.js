@@ -33,6 +33,7 @@ import TagInput from './tag-input'
 import Text from './text'
 import TextDropdownButton from './text-dropdown-button'
 import Tooltip from './tooltip'
+import Grid from './grid'
 
 export default {
   Alert,
@@ -69,5 +70,6 @@ export default {
   TagInput,
   Text,
   TextDropdownButton,
-  Tooltip
+  Tooltip,
+  Grid
 }

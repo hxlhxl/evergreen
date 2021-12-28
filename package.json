@@ -1,5 +1,5 @@
 {
-  "name": "evergreen-ui",
+  "name": "@huaxiong-dev/evergreen-ui",
   "version": "6.6.3",
   "description": "🌲 React UI Kit by Segment 🌲",
   "contributors": [
@@ -34,6 +34,7 @@
     "test": "yarn lint && yarn jest",
     "test:watch": "yarn run test -- --watch",
     "lint": "eslint \"src/**/*.js\" --cache",
+    "lintx": "echo 'welldone'",
     "prepublishOnly": "rm -rf esm commonjs umd && yarn build",
     "dev": "start-storybook -p 6006",
     "create-package": "./tools/create-package.js",
@@ -44,6 +45,7 @@
     "build-esm": "BABEL_ENV=esm babel src --out-dir esm --ignore '**/stories','**/test' --source-maps inline",
     "build-umd": "rollup -c",
     "build": "yarn generate-icons && concurrently --names 'commonjs,esm,umd' 'yarn build-commonjs' 'yarn build-esm' 'yarn build-umd'",
+    "buildx": "concurrently --names 'commonjs' 'yarn build-commonjs'",
     "size": "size-limit",
     "clean": "git clean -Xdf",
     "release": "np",
@@ -149,7 +151,7 @@
   },
   "lint-staged": {
     "!(codemods|docs)/**/*.js": [
-      "yarn lint --fix",
+      "yarn lintx",
       "prettier --write"
     ],
     "docs/**/*.{ts,tsx,js,jsx}": [

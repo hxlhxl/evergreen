@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { StackingOrder } from '../../constants'
 import Toast from './Toast'
 
+const noop = () => {}
 const wrapperClass = css({
   maxWidth: 560,
   margin: '0 auto',
@@ -57,7 +58,12 @@ const ToastManager = memo(function ToastManager(props) {
   }
 
   const removeToast = id => {
+    const toastToRemove = toasts.find(toast => toast.id == id)
     const updatedToasts = toasts.filter(toast => !String(toast.id).startsWith(id))
+    if (toastToRemove && toastToRemove.onRemove) {
+      toastToRemove.onRemove()
+    }
+
     setToasts(updatedToasts)
     return updatedToasts
   }
@@ -73,18 +79,22 @@ const ToastManager = memo(function ToastManager(props) {
       description: settings.description,
       hasCloseButton: settings.hasCloseButton ?? true,
       duration: settings.duration || 5,
+      onRemove: settings.onRemove || noop,
       close: () => safeCloseToast(id),
       intent: settings.intent
     }
   }
 
+  /**
+   * 删掉toasts中存在的，然后创建一个全新的
+   */
   const notify = (title, settings) => {
     let tempToasts = toasts
     if (hasCustomId(settings)) {
       tempToasts = removeToast(settings.id)
     }
-
     const instance = createToastInstance(title, settings)
+
     setToasts([instance, ...tempToasts])
   }
 
